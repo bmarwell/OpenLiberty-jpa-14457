@@ -1,0 +1,58 @@
+<server
+        description="Sample Liberty server"
+>
+    <featureManager>
+        <feature>jaxrs-2.1</feature>
+        <feature>cdi-2.0</feature>
+        <feature>jpa-2.2</feature>
+    </featureManager>
+
+    <webApplication
+            location="${artifactId}.war"
+            contextRoot="/"
+    />
+
+    <httpEndpoint
+            host="*"
+            httpPort="${default.http.port}"
+            httpsPort="${default.https.port}"
+            id="defaultHttpEndpoint"
+    />
+
+    <cdi12
+            enableImplicitBeanArchives="false"
+    />
+
+    <!-- use h2 library as jdbc driver -->
+    <jdbcDriver
+            id="h2"
+            javax.sql.DataSource="org.h2.jdbcx.JdbcDataSource"
+    >
+        <!-- h2 library -->
+        <library
+                description="H2 Database"
+                name="h2"
+        >
+            <fileset
+                    dir="${shared.resource.dir}/h2"
+                    includes="h2*.jar"/>
+        </library>
+    </jdbcDriver>
+
+    <dataSource
+            id="test"
+            jndiName="jdbc/test"
+            jdbcDriverRef="h2"
+            type="javax.sql.Datasource"
+    >
+        <connectionManager
+                maxPoolSize="2"
+                minPoolSize="1"
+        />
+        <properties
+                URL="jdbc:h2:mem:test;INIT=CREATE TABLE IF NOT EXISTS MYTABLE(id IDENTITY PRIMARY KEY, field varchar(1023));"
+                user="sa"
+                password=""
+        />
+    </dataSource>
+</server>

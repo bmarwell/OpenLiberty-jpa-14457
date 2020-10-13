@@ -1,0 +1,48 @@
+= EclipseLink ClassCast showcase
+
+This project demonstrates via an eclipselink ClassCastException.
+
+Demo 1:
+Junit Unit test using EclipseLink and h2.
+
+Demo 2:
+Junit Integration test case using OpenLiberty.
+
+== Executing the tests
+
+`mvn clean verify`
+
+As maven will stop after the first test failure, the integration test is not being executed.
+
+To execute both tests, run:
+
+`mvn clean verify -Dmaven.test.failure.ignore=true`
+
+== Unit test
+
+The unit test takes the existing persistence.xml and overrides some values via a property map.
+The jdbc url is set to a h2 memory db.
+
+The test executed is a simple `select case … then true else false` JPQL statement.
+
+=== Dependencies
+
+The following dependencies were added:
+
+* *eclipselink* +
+used as an JPA implementation, which is also used by OpenLiberty.
+
+== Integration test
+
+The integration test uses the integration test lifecycle of the openliberty maven plugin.
+
+All *IT classes are automatically executed in this phase only.
+
+=== Dependencies
+
+The following dependencies were added:
+
+* *jersey* +
+A jax-rs client implementation, used to connect to the OpenLiberty instance
+* *hk2* +
+Jersey requires the hk2 DI library on the classpath but has no dependency on it.
