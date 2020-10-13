@@ -46,3 +46,9 @@ The following dependencies were added:
 A jax-rs client implementation, used to connect to the OpenLiberty instance
 * *hk2* +
 Jersey requires the hk2 DI library on the classpath but has no dependency on it.
+
+
+== Issues
+
+* https://github.com/OpenLiberty/open-liberty/issues/14457
+* TS004326991
